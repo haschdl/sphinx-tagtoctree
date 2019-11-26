@@ -12,7 +12,7 @@ log_prefix = '[TagTocTree]'
 def log(message, prefix=log_prefix):
     print('{} {}'.format(prefix, message))
 
-def collect_metadata(app, doctree, fromdocname):
+def doctreeresolved_handler(app, doctree, fromdocname):
     # return if the directive has not been used
     # in any document
     if not hasattr(app.env, 'tagtoctree_all'):
@@ -50,7 +50,7 @@ def setup(app):
     # adds a new configuration value, default 'tagtoctree'
     # this is the tag to be added to the page headers
     app.add_config_value('tagtoctree_tag','tagtoctree', 'env')
-    app.connect('doctree-resolved', collect_metadata)
+    app.connect('doctree-resolved', doctreeresolved_handler)
     return {'version': '1.0.0'}
 
 class TagTocTree(TocTree):
