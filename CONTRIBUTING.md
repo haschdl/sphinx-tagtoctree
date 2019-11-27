@@ -5,9 +5,11 @@ PRs are welcome!
 
 ## Notes to developer
 
-1. Generating a new distribution for PyPi
+1. Generate and push a new tag
 
-Run `python setup.py sdist` from your source folder `src` to generate a source distribution.
+`git push origin --tags`
+
+2. Github action will then publish to PyPi on a new release.
 
 ## Debugging
 
