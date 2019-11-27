@@ -1,1 +1,2 @@
 include docs/*.png
+include README.md

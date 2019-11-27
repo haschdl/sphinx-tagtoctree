@@ -5,7 +5,7 @@ from sphinx.directives.other import TocTree
 from sphinx import addnodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
-
+from sphinx_tagtoctree import _version
 
 log_prefix = '[TagTocTree]'
 
@@ -51,23 +51,14 @@ def setup(app):
     # this is the tag to be added to the page headers
     app.add_config_value('tagtoctree_tag','tagtoctree', 'env')
     app.connect('doctree-resolved', doctreeresolved_handler)
-    return {'version': '1.0.0'}
+    return {'version': _version.__version__}
 
 class TagTocTree(TocTree):
     """
     Directive to notify Sphinx about the hierarchical structure of the docs,
     and to include a table-of-contents like tree in the current document. This
     version filters the entries based a tag.
-    """
-    
-
-    print("Waiting for debugger attach (run)")
-    # 5678 is the default attach port in the VS Code debug configurations    
-    import ptvsd
-    ptvsd.enable_attach(address=('localhost', 5678), redirect_output=True)
-    ptvsd.wait_for_attach()
-    breakpoint()
-    
+    """    
 
     option_spec = TocTree.option_spec
     option_spec['tag'] = directives.class_option
@@ -86,6 +77,10 @@ class TagTocTree(TocTree):
         return
 
     def run(self):
+        """
+        Sphinx function, called for each instance of
+        TagTocTree found across documents.
+        """
         toctree =  super().run()
         self.collect_metadata(toctree)        
         return toctree

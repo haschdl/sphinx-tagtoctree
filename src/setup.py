@@ -1,13 +1,16 @@
 
 import setuptools
-with open("../README.md", "r") as fh:
+from sphinx_tagtoctree import _version
+with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name='sphinx-tagtoctree',
-    version='0.9.0',
+    version=_version.__version__,
     author="Half Scheidl",
     author_email="noreply@hscheidl.com",
+    url="https://github.com/haschdl/sphinx-tagtoctree",
+    description="Sphinx table-of-contents with super powers",
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
