@@ -6,6 +6,7 @@ from sphinx import addnodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from sphinx_tagtoctree import _version
+import boolean
 
 log_prefix = '[TagTocTree]'
 
@@ -37,7 +38,7 @@ def doctreeresolved_handler(app, doctree, fromdocname):
             meta = app.env.metadata[includefile][fieldname]                      
             meta_values = [v.strip().upper() for v in meta.split(",")]
             filter_values = [v.strip().upper() for v in toctree_info['tag_filter']]
-
+            
             intersects = any( [ (i in meta_values) for i in filter_values])    
             if not intersects:
                 fs = toctree.attributes['includefiles']
@@ -62,7 +63,7 @@ class TagTocTree(TocTree):
 
     option_spec = TocTree.option_spec
     option_spec['tag'] = directives.class_option
-    
+    option_spec['tag_exp'] = directives.class_option
 
     def collect_metadata(self, toctree):
         if not hasattr(self.env, 'tagtoctree_all'):
@@ -72,6 +73,7 @@ class TagTocTree(TocTree):
             'docname': self.env.docname,
             'lineno': self.lineno,
             'tag_filter' : self.options['tag'],
+            'tag_exp' : self.options['tag_exp']
             'includefiles' : toctree[0].children[0].attributes['includefiles'],
         })
         return
