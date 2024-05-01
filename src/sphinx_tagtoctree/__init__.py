@@ -33,12 +33,28 @@ def doctreeresolved_handler(app, doctree, fromdocname):
             continue
         
         fieldname = "".join(app.config.tagtoctree_tag)
+        
+        filter_values = [v.strip().upper() for v in toctree_info['tag_filter']]
+        
 
         for includefile in toctree_info['includefiles']:
-            meta = app.env.metadata[includefile][fieldname]                      
-            meta_values = [v.strip().upper() for v in meta.split(",")]
-            filter_values = [v.strip().upper() for v in toctree_info['tag_filter']]
+            meta_value = app.env.metadata[includefile][fieldname]                      
+            meta_values = [v.strip().upper() for v in meta_value.split(",")]
             
+            tag_filter_str = toctree_info['tag_expr']
+            if(tag_filter_str != ""): #has precedence over single tag_filter
+                algebra = boolean.BooleanAlgebra()
+                tag_filter_expr = algebra.parse(tag_filter_str)
+
+                tag_vals_as_expr = [ algebra.parse(tag) for tag in meta_values] 
+                for tag_val_expr in tag_vals_as_expr:
+                    tag_filter_expr = tag_filter_expr.subs( { tag_val_expr: algebra.TRUE}).simplify()
+                if(tag_filter_expr == algebra.TRUE):
+                    break;
+
+                if(tag_filter_expr == algebra.TRUE): #the expression evaluates to true for the tags in the current page
+                    pass;
+
             intersects = any( [ (i in meta_values) for i in filter_values])    
             if not intersects:
                 fs = toctree.attributes['includefiles']
@@ -49,7 +65,7 @@ def doctreeresolved_handler(app, doctree, fromdocname):
 def setup(app):    
     app.add_directive('tagtoctree', TagTocTree)    
     # adds a new configuration value, default 'tagtoctree'
-    # this is the tag to be added to the page headers
+    # this is the tag users will add to the page headers
     app.add_config_value('tagtoctree_tag','tagtoctree', 'env')
     app.connect('doctree-resolved', doctreeresolved_handler)
     return {'version': _version.__version__}
@@ -58,12 +74,13 @@ class TagTocTree(TocTree):
     """
     Directive to notify Sphinx about the hierarchical structure of the docs,
     and to include a table-of-contents like tree in the current document. This
-    version filters the entries based a tag.
+    version filters the entries based a tag ("banana"), or an boolean expression of tags
+    ("banana AND orange").
     """    
 
     option_spec = TocTree.option_spec
     option_spec['tag'] = directives.class_option
-    option_spec['tag_exp'] = directives.class_option
+    option_spec['tag_expr'] = directives.class_option
 
     def collect_metadata(self, toctree):
         if not hasattr(self.env, 'tagtoctree_all'):
@@ -73,7 +90,7 @@ class TagTocTree(TocTree):
             'docname': self.env.docname,
             'lineno': self.lineno,
             'tag_filter' : self.options['tag'],
-            'tag_exp' : self.options['tag_exp']
+            'tag_expr' : self.options['tag_expr'],
             'includefiles' : toctree[0].children[0].attributes['includefiles'],
         })
         return
