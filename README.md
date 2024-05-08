@@ -1,7 +1,7 @@
 # Sphinx Extension: TagTocTree
 
 This is an extension to the documentation engine [Sphinx](http://www.sphinx-doc.org/).
-It allows you to include pages in a table-of-contents by using tags assigned to a page.
+It allows you to include pages in a table of contents by using tags assigned to a page.
 
 ## How it works
 
@@ -15,7 +15,7 @@ Directive    |   Configuration                   | Produces                     
 
 (*) Sphinx native [`toctree`](https://www.sphinx-doc.org/en/1.8/usage/restructuredtext/directives.html#directive-toctree)
 
-## Usage
+## Installation
 
 The documentation assumes you have a Sphinx project running.
 
@@ -25,7 +25,7 @@ The documentation assumes you have a Sphinx project running.
     pip install sphinx-tagtoctree
     ```
 
-- In your Sphinx configuration file (`conf.py`), add a entry for `tagtoctree`:
+- In your Sphinx configuration file (`conf.py`), add an entry for `tagtoctree`:
 
     ```python
     extensions = [
@@ -33,11 +33,27 @@ The documentation assumes you have a Sphinx project running.
     ]
     ```
 
-- (Optional) Add configuration value for `tagtoctree_tag`. If none is provided, the default `tagtoctree` will be used.
+## Configuration options
+
+Configurations that can be added to `conf.py`:
+
+1. `tagtoctree_tag`
+- (Optional) Add a configuration value for `tagtoctree_tag`. If none is provided, the default `tagtoctree` will be used. This is the tag you will add to your pages.
 
    ```python
    tagtoctree_tag = 'tagtoctree'
    ```
+
+2. `tagtoctree_allowed_in_token` 
+
+- (Optional) Add a configuration value for `tagtoctree_allowed_in_token` with a string  
+of specials characters that should be allowed in tags. If none is provided, the default `.:_` will be used. 
+
+   ```python
+   tagtoctree_allowed_in_token = '.:_-'
+   ```
+
+## Usage - simple tags
 
 - For each page, add a header on the top with the values of your tags. See examples [page1](/example/source/page1.rst) and
  [page2](/example/source/page2.rst) in this repo.
@@ -53,3 +69,50 @@ The documentation assumes you have a Sphinx project running.
 
     **
  ```
+
+## Usage - boolean filter
+
+You can specify a more complex filter using boolean expressions.
+Examples of valid expressions are:
+
+    * ``(Customer AND Product)`` Include pages with tags Customer and Product. 
+    * ``(Customer OR Product) AND NOT(Sales)`` Include pages that have tags Customer or Product, but which do not have tag Sales. Equivalent to ``(Customer OR Product) AND ~ Sales``
+    * ``(NOT Customer) AND NOT(Sales)`` Include pages that do have neither Customer nor Product.
+    
+Examples:
+
+```rst
+.. tagtoctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Pages filtered with an expression: (Customer AND Product)
+   :tag_expr: Customer AND Product
+
+   **
+
+.. tagtoctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Pages filtered with an expression: (Customer OR Product) AND Sales
+   :tag_expr: (Customer OR Product) AND Sales
+
+   **
+
+
+.. tagtoctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Pages filtered with an expression: (Customer OR Product) AND NOT Sales
+   :tag_expr: (Customer OR Product) AND NOT Sales
+
+   **
+
+
+.. tagtoctree::
+   :maxdepth: 1
+   :glob:
+   :caption: Pages filtered with an expression: (NOT Customer) AND NOT(Sales)
+   :tag_expr: (NOT Customer) AND NOT(Sales)
+
+   **
+```

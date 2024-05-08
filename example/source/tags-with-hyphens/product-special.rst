@@ -1,6 +1,6 @@
-:tagtoctree: Sales
+:tagtoctree: funk:24-23
 
-A page tagges with Sales
+Product alternative page
 ========================
 
 sdsd asd 

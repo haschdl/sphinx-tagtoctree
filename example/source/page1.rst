@@ -1,7 +1,7 @@
 :tagtoctree: Sales, Product
 
-Page 1
-======
+A page tagged with Sales and Product
+====================================
 
 sdsd asd 
 asd asd d
