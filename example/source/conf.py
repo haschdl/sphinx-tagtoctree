@@ -30,6 +30,8 @@ extensions = [
 ]
 
 tagtoctree_tag = 'tagtoctree'
+#list of characters allowed in tokens. Default = .:_
+tagtoctree_allowed_in_token=".:_-"
 keep_warnings = True
 
 # Add any paths that contain templates here, relative to this directory.

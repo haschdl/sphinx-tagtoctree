@@ -1,7 +1,7 @@
 :tagtoctree: Customer, Sales
 
-Page 3
-======
+My page tagged with Customer and Sales
+======================================
 
 sdsd asd 
 asd asd d

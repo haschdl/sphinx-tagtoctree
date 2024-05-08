@@ -1,7 +1,7 @@
 :tagtoctree: Sales
 
-Page 6
-======
+My page about Sales
+===================
 
 sdsd asd 
 asd asd d
