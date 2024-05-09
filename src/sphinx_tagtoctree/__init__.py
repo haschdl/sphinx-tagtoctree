@@ -5,9 +5,9 @@ from sphinx.directives.other import TocTree
 from sphinx import addnodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
-from sphinx_tagtoctree import _version
 import boolean
 from sphinx.util import logging
+from importlib.metadata import version
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +111,7 @@ def setup(app):
     app.add_config_value('tagtoctree_tag','tagtoctree', 'env')
     app.add_config_value('tagtoctree_allowed_in_token', '', 'env')
     app.connect('doctree-resolved', doctreeresolved_handler)
-    return {'version': _version.__version__}
+    return {'version': version('sphinx-tagtoctree')}
 
 class TagTocTree(TocTree):
     """

@@ -1,0 +1,28 @@
+CHANGES
+=======
+
+0.9.5a2
+-------
+
+* Fixed version metadata
+* Build tools
+
+0.9.5a1
+-------
+
+* Build tools
+* Build tools
+* Restored setup.py
+* Updated build tool
+* Add support to boolean expressions
+* WIP
+* Added dependencies and initial code for supporting flexible filter clauses
+* Update Github publish action
+* Fixed type in requirements
+* Update Github publish action
+* Updated version, update Github publish action
+* Updated version, update Github publish action
+* Create pythonpublish.yml
+* Added images to manifest
+* License info
+* First version
