@@ -12,8 +12,11 @@ PRs are welcome!
 
 3. Generate and push a new signed (`-s`) tag . A signed tag is required.
 
+<<<<<<< HEAD
 `git tag -s v0.9.5 -m "Release of filter expressions"`
 
+=======
+>>>>>>> 13febda (Build tools)
 `git tag -s v0.9.5b -m "Release of filter expressions"`
 `git push origin --tags`
 
