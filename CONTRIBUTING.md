@@ -8,13 +8,13 @@ PRs are welcome!
 1. Make sure you have the latest `build` installed
 `pip3 install --upgrade build`
 
-2. Test build locally. TODO: Add to actions
-`python3 -m build` 
+2. Commit and push changes
 
 3. Generate and push a new signed (`-s`) tag . A signed tag is required.
 
 `git tag -s v0.9.5 -m "Release of filter expressions"`
 
+`git tag -s v0.9.5b -m "Release of filter expressions"`
 `git push origin --tags`
 
 4. Build and package with `python3 -m build`
