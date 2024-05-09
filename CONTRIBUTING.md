@@ -5,7 +5,13 @@ PRs are welcome!
 
 ## Notes to developer
 
-1. Generate and push a new tag
+1. Make sure you have the latest `build` installed
+`pip3 install --upgrade build`
+
+2. Test build locally. TODO: Add to actions
+`python3 -m build` 
+
+Generate and push a new tag
 
 `git push origin --tags`
 
