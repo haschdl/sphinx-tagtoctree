@@ -11,11 +11,14 @@ PRs are welcome!
 2. Test build locally. TODO: Add to actions
 `python3 -m build` 
 
-Generate and push a new tag
+3. Generate and push a new signed (`-s`) tag . A signed tag is required.
+
+`git tag -s v0.9.5 -m "Release of filter expressions"`
 
 `git push origin --tags`
 
-2. Github action will then publish to PyPi on a new release.
+4. Build and package with `python3 -m build`
+Github action will then publish to PyPi on a new release.
 
 ## Debugging
 
